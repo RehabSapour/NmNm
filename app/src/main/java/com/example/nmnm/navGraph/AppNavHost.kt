@@ -39,7 +39,9 @@ fun AppNavHost(
             FriendsScreen(navController = navController)
         }
         composable(BottomBarScreen.Chats.route) {
-            ChatsScreen(navController = navController)
+            ChatsScreen(navController = navController){
+
+            }
         }
         composable(BottomBarScreen.Settings.route) {
             SettingsScreen(navController)

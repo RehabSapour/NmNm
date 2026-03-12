@@ -3,6 +3,7 @@ package com.example.nmnm.VM
 // ChatRepository.kt
 import android.util.Log
 import com.example.nmnm.Api.AuthApiService
+import com.example.nmnm.Models.ChatItem
 import com.example.nmnm.Models.MessageModel
 import com.microsoft.signalr.HubConnection
 import com.microsoft.signalr.HubConnectionBuilder
@@ -68,8 +69,35 @@ class ChatRepository(private val token: String,private val apiService: AuthApiSe
         }
     }
 
-}
+    suspend fun getChatChannels(): List<ChatItem> {
+        val response = apiService.getChatChannels("Bearer $token")
+        return if (response.isSuccessful) {
+            response.body()?.map { dto ->
+                ChatItem(
+                    id = dto.userId, // بنستخدم الـ userId كـ id للـ ChatItem
+                    name = dto.fullName,
+                    email = dto.email,
+                    lastMessage = dto.lastMessage,
+                    image = dto.profileImage,
+                    time = formatTime(dto.lastMessageTime),
+                    unreadCount = dto.unreadCount
+                )
+            } ?: emptyList()
+        } else {
+            emptyList()
+        }
+    }
 
+    // دالة بسيطة لتنسيق شكل الوقت (مثلاً: 19:25)
+
+}
+ fun formatTime(isoTime: String): String {
+    return try {
+        isoTime.substring(11, 16)
+    } catch (e: Exception) {
+        ""
+    }
+}
 data class MessageDto(
     val id: String = "",
     val senderId: String = "",

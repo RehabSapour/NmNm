@@ -46,7 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.nmnm.Models.UserResponse
 import com.example.nmnm.R
-
+import com.example.nmnm.VM.formatTime
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -197,7 +197,7 @@ fun MessageBubble(message: MessageModel) {
         }
 
         Text(
-            text = message.time,
+            text = formatTime(message.time),
             fontSize = 10.sp,
             color = Color.Gray,
             modifier = Modifier.padding(top = 4.dp, start = 4.dp, end = 4.dp)

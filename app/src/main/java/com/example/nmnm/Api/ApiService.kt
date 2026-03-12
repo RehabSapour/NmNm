@@ -1,6 +1,7 @@
 package com.example.nmnm.Api
 
 
+import com.example.nmnm.Models.ChatChannelDto
 import com.example.nmnm.Models.LoginRequest
 import com.example.nmnm.Models.RegisterResponse
 import com.example.nmnm.Models.ResetPasswordRequest
@@ -77,4 +78,8 @@ interface AuthApiService {
         @Path("receiverId") receiverId: String
     ): Response<List<MessageDto>>
 
+    @GET("api/Chat/channels")
+    suspend fun getChatChannels(
+        @Header("Authorization") token: String
+    ): Response<List<ChatChannelDto>>
 }
